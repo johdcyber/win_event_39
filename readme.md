@@ -1,4 +1,4 @@
-## Windows Event Code 39 and ADCS Exploitation: Privilege Escalation in Windows Environments
+# Windows Event Code 39 and ADCS Exploitation: Privilege Escalation in Windows Environments
 
 ### Introduction
 
