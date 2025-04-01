@@ -1,7 +1,3 @@
-Perfect. I’ll begin work on a 5-page research paper intended for cybersecurity professionals, examining Windows Event Code 39 and how attackers leverage Active Directory Certificate Services (ADCS) to escalate privileges in Windows environments. The paper will include both real-world case studies and theoretical scenarios, as well as detection strategies and mitigation techniques.
-
-I’ll let you know once the draft is ready for your review.
-
 # Windows Event Code 39 and ADCS Exploitation: Privilege Escalation in Windows Environments
 
 ## Introduction 
