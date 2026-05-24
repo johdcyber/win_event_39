@@ -191,22 +191,30 @@ Oral and maxillofacial radiologists, general dentists, orthodontists, oral surge
 This prompt is the runtime instruction set. The Claude Code surrounding it is configured as follows:
 
 - **`CLAUDE.md`** — project-wide rules, mission, non-negotiables, architecture, PHI handling.
-- **`.claude/agents/`** — specialized subagents:
-  - `cbct-radiology-reader` — end-to-end CBCT "second reader" (opus).
-  - `intraoral-scan-analyzer` — IOS surface analysis (sonnet).
-  - `dicom-ingest-qc` — DICOM validation, de-identification, quality gate (sonnet).
-  - `regulatory-compliance-reviewer` — FDA SaMD / HIPAA / IEC 62304 diff audit (opus).
-  - `ml-training-engineer` — 3D CNN training, calibration, per-cohort eval (opus).
-  - `pacs-fhir-integrator` — DICOM-SR, HL7, FHIR write-back, marketplace plugins (sonnet).
+- **`.claude/agents/`** — specialized subagents (for building the platform):
+  - Clinical pipeline: `cbct-radiology-reader` (opus), `intraoral-scan-analyzer` (sonnet), `dicom-ingest-qc` (sonnet).
+  - Governance: `regulatory-compliance-reviewer` (opus).
+  - ML: `ml-training-engineer` (opus).
+  - Integration: `pacs-fhir-integrator` (sonnet).
+  - Runtime AI: `llm-proxy-engineer` (sonnet), `memory-systems-engineer` (opus), `in-product-agent-designer` (opus).
+  - Product surface: `frontend-engineer` (sonnet), `design-system-owner` (sonnet).
+  - Infrastructure: `database-architect` (opus), `platform-sre` (opus).
 - **`.claude/skills/`** — user-invocable workflows:
-  - `/analyze-cbct` — full CBCT pipeline.
-  - `/analyze-ios` — intraoral scan pipeline.
-  - `/implant-plan` — implant planning packet.
-  - `/airway-screen` — airway screening.
-  - `/tmj-eval` — bilateral TMJ evaluation.
-  - `/longitudinal-compare` — registered current-vs-prior delta report.
-  - `/regulatory-check` — pre-merge SaMD / HIPAA audit.
-  - `/train-segmenter` — segmentation/detection model training run.
+  - Clinical: `/analyze-cbct`, `/analyze-ios`, `/implant-plan`, `/airway-screen`, `/tmj-eval`, `/longitudinal-compare`.
+  - Engineering reviews: `/regulatory-check`, `/llm-proxy-check`, `/memory-audit`, `/design-review`, `/db-migration-review`, `/scale-review`.
+  - ML: `/train-segmenter`.
+
+### In-product runtime agents (distinct from build-time subagents)
+
+These run inside the platform, orchestrated behind the LLM proxy and on top of the memory layer:
+- `orchestrator` — drives the case state machine.
+- `triage` — escalates urgent/critical findings.
+- `report-drafter` — composes the clinician-readable summary.
+- `qa` — clinician chat over a finding.
+- `coding` — CDT/CPT/ICD-10 suggestions.
+- `longitudinal` — current-vs-prior diffs and watch-list monitoring.
+- `surveillance` — incidental-finding follow-up scheduling.
+- `audit` — immutable record of every output and clinician action.
 
 ### Orchestration pattern
 
